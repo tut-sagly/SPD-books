@@ -13,7 +13,7 @@ app.set("port", process.env.PORT || 3000);
 
 createConnection({
     type: "mysql",
-    host: "192.168.0.104",
+    host: "db",
     port: 3306,
     username: "root",
     password: "root",
