@@ -1,5 +1,5 @@
 import express from "express";
-import {User} from "./entity/User";
+import {Author} from "./entity/Author";
 import {createConnection} from "typeorm";
 
 import {getConnection} from "typeorm";
@@ -24,7 +24,7 @@ createConnection({
     synchronize: true,
     logging: false
 }).then(connection => {
-    let user = new User();
+    let user = new Author();
     user.id = 1;
     user.firstName = "kek";
     user.lastName = "lol";
@@ -38,7 +38,7 @@ createConnection({
 }).catch(error => console.log(error));
 
 app.get("/", (req, res) => {
-    let user = new User();
+    let user = new Author();
     // user.id = 1;
     user.firstName = "kek";
     user.lastName = "lol";
