@@ -24,5 +24,6 @@ services:
     volumes:
       - ./:/home/app
       - /home/app/node_modules
+    depends_on:
+      - db
 
-#TODO add network..
