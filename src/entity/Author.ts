@@ -13,9 +13,6 @@ export class Author {
     @Column()
     lastName!: string;
 
-    @Column()
-    bio!: string;
-
     @OneToMany(() => Book, book => book.author)
     books!: Book[];
 }

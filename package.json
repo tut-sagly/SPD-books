@@ -3,16 +3,24 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "npm run build-ts",
+    "build": "npm run build-sass && npm run build-ts && npm run tslint",
     "build-ts": "tsc",
     "start": "node server.js",
     "start:dev": "nodemon --debug=56745",
-    "serve": "node dist/server.js"
+    "serve": "node dist/server.js",
+    "build-sass": "node-sass src/public/css/main.scss dist/public/css/main.css",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "sass": "node-sass -w src/public/css -o dist/public/css"
   },
   "dependencies": {
+    "@decorators/di": "^1.0.2",
     "@decorators/express": "^2.4.0",
+    "bootstrap-sass": "^3.3.7",
+    "compression": "^1.7.1",
+    "ejs": "^2.6.1",
     "express": "^4.16.1",
     "mysql": "^2.18.1",
+    "node-sass": "^4.7.2",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.29"
   },
