@@ -7,6 +7,7 @@ import {attachControllers} from "@decorators/express";
 import bodyParser from "body-parser";
 import path from "path";
 import {IndexController} from "./controllers/IndexController";
+import {BookController} from "./controllers/BookController";
 
 const app = express();
 
@@ -27,20 +28,20 @@ createConnection({  // TODO: smells to extract it
          __dirname + "/entity/*.ts"
     ],
     synchronize: true,
-    logging: false
+    logging: ["error"]
 }).catch(error => console.log(error));
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 // app.use(compression());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true })); //TODO add error handler
 
 app.use(
     express.static(path.join(__dirname, "../dist/public"), { maxAge: 31557600000 })
 );
 
-attachControllers(app, [AuthorController, IndexController]);
+attachControllers(app, [IndexController, AuthorController, BookController]);
 
 
 export default app;

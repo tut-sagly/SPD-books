@@ -4,7 +4,7 @@ import {Injectable} from "@decorators/di";
 
 @Injectable()
 export class AuthorService {
-    async getAuthors() {
+    async getAll() {
         return await getRepository(Author).find();
     }
 

@@ -1,5 +1,5 @@
-import {Controller, Get, Params, Post, Response, Request, Delete} from "@decorators/express";
-import {Response as Res, Request as Req} from "express";
+import {Controller, Get, Params, Post, Request, Response} from "@decorators/express";
+import {Request as Req, Response as Res} from "express";
 import {AuthorService} from "../services/AuthorService";
 import {Inject} from "@decorators/di";
 import {Author} from "../entity/Author";
@@ -13,7 +13,7 @@ export class AuthorController {
 
     @Get('/')
     async index(@Response() res: Res) {
-        let authors = await this.authorService.getAuthors()
+        let authors = await this.authorService.getAll()
         res.render("authors/index", {
             title: "Home",
             messages: {},
@@ -60,7 +60,7 @@ export class AuthorController {
     }
 
     @Post('/update/:id')
-    async update(@Request() req: Req, @Response() res: Res, @Params('id') id: number) {
+    async editPost(@Request() req: Req, @Response() res: Res, @Params('id') id: number) {
         const body = req.body;
         let author = new Author()
         author.id = id;
@@ -69,7 +69,7 @@ export class AuthorController {
 
         await this.authorService.update(author);
 
-        let authors = await this.authorService.getAuthors();
+        let authors = await this.authorService.getAll();
 
         res.render('authors/index', {
             title: "Home",

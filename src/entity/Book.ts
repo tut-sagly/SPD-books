@@ -14,7 +14,6 @@ export class Book {
     @ManyToOne(() => Author, author => author.books)
     author!: Author;
 
-    @OneToOne(() => Genre)
-    @JoinColumn()
+    @ManyToOne(() => Genre, genre => genre.books)
     genre!: Genre;
 }
