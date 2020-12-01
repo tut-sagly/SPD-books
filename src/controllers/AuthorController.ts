@@ -1,4 +1,4 @@
-import {Controller, Get, Params, Post, Request, Response} from "@decorators/express";
+import {Controller, Get, Params, Post, Query, Request, Response} from "@decorators/express";
 import {Request as Req, Response as Res} from "express";
 import {AuthorService} from "../services/AuthorService";
 import {Inject} from "@decorators/di";
@@ -12,12 +12,15 @@ export class AuthorController {
     }
 
     @Get('/')
-    async index(@Response() res: Res) {
-        let authors = await this.authorService.getAll()
+    async index(@Response() res: Res, @Query('page') page: number) {
+        let authors = await this.authorService.getPage(page);
+
         res.render("authors/index", {
-            title: "Home",
             messages: {},
-            data: authors
+            url: "/authors",
+            current: authors.page,
+            pages: authors.pages,
+            data: authors.data
         });
     }
 
@@ -69,14 +72,15 @@ export class AuthorController {
 
         await this.authorService.update(author);
 
-        let authors = await this.authorService.getAll();
+        let authors = await this.authorService.getPage(1);
 
-        res.render('authors/index', {
-            title: "Home",
+        res.render("authors/index", {
             messages: {success: 'Author was updated'},
-            data: authors
+            url: "/authors",
+            current: authors.page,
+            pages: authors.pages,
+            data: authors.data
         });
-
     }
 
     @Get('/delete/:id')

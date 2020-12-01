@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Request, Response} from "@decorators/express";
+import {Controller, Get, Post, Query, Request, Response} from "@decorators/express";
 import {Request as Req, Response as Res} from "express";
 import {Inject} from "@decorators/di";
 import {Book} from "../entity/Book";
@@ -7,17 +7,18 @@ import {BookService} from "../services/BookService";
 @Controller('/books')
 export class BookController {
 
-    constructor(@Inject(BookService) private bookService: BookService) {
-
-    }
+    constructor(@Inject(BookService) private bookService: BookService) { }
 
     @Get('/')
-    async index(@Response() res: Res) {
-        let books = await this.bookService.getAll()
+    async index(@Response() res: Res, @Query('page') page: number) {
+        let books = await this.bookService.getPage(page);
+
         res.render("books/index", {
-            title: "Home",
             messages: {},
-            data: books
+            url: "/books",
+            current: books.page,
+            pages: books.pages,
+            data: books.data
         });
     }
 
@@ -37,13 +38,9 @@ export class BookController {
 
         let book = new Book();
         book.name = body.name;
-        // book.lastName = body.lastName;
 
         await this.bookService.save(book, 2, 1); // TODO pass real ids
-        let books = await this.bookService.getAll()
-        res.render("books/index", {
-            messages: {success: 'Book was added'},
-            data: books
-        });
+        let books = await this.bookService.getPage(1);
+       res.redirect('/books')
     }
 }

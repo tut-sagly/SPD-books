@@ -1,13 +1,21 @@
 import {Book} from "../entity/Book";
 import {getConnection, getRepository} from "typeorm";
-import {Injectable} from "@decorators/di";
+import {Inject, Injectable} from "@decorators/di";
 import {Author} from "../entity/Author";
 import {Genre} from "../entity/Genre";
+import {PAGE_SIZE, PageUtils} from "./PageUtils";
 
 @Injectable()
 export class BookService {
-    async getAll() {
-        return await getRepository(Book).find();
+
+    constructor(@Inject(PageUtils) private utils: PageUtils) {
+    }
+
+    async getPage(page: number) {
+        const options = this.utils.getSearchOptions(page);
+
+        const [books, total] = await getRepository(Book).findAndCount(options);
+        return this.utils.mapResult(books, total, options.UIpage);
     }
 
     async get(id: number): Promise<Book | undefined> {
@@ -19,7 +27,7 @@ export class BookService {
     }
 
     async save(book: Book, authorId: number, genreId: number) {
-        /*  return await getConnection() //TODO looks strange but it sends update query instead of insert ^__^ https://typeorm.io/#/relational-query-builder
+        /*  return await getConnection() //TODO looks strange but it sends update query to DB instead of insert ^__^ https://typeorm.io/#/relational-query-builder
               .createQueryBuilder()
               .relation(Author, "books")
               .of(author.id)
@@ -32,7 +40,6 @@ export class BookService {
             book.genre = genre;
         } else throw "Invalid author or genre.";
 
-        console.log(book);
         return await getRepository(Book).save(book);
 
     }

@@ -1,11 +1,18 @@
 import {Author} from "../entity/Author";
 import {getRepository} from "typeorm";
-import {Injectable} from "@decorators/di";
+import {Inject, Injectable} from "@decorators/di";
+import {PageUtils} from "./PageUtils";
 
 @Injectable()
 export class AuthorService {
-    async getAll() {
-        return await getRepository(Author).find();
+
+    constructor(@Inject(PageUtils) private utils: PageUtils) {  }
+
+    async getPage(page: number) {
+        const options  = this.utils.getSearchOptions(page);
+        const [authors, total] = await getRepository(Author).findAndCount(options);
+
+        return this.utils.mapResult(authors, total, options.UIpage);
     }
 
     async get(id: number): Promise<Author | undefined> {
