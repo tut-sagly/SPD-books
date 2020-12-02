@@ -26,7 +26,7 @@ export class BookService {
         return await getRepository(Book).update(book.id, book);
     }
 
-    async save(book: Book, authorId: number, genreId: number) {
+    async save(bookName: string, authorId: number, genreId: number) {
         /*  return await getConnection() //TODO looks strange but it sends update query to DB instead of insert ^__^ https://typeorm.io/#/relational-query-builder
               .createQueryBuilder()
               .relation(Author, "books")
@@ -35,6 +35,10 @@ export class BookService {
 
         const author = await getRepository(Author).findOne(authorId);
         const genre = await getRepository(Genre).findOne(genreId);
+
+        let book = new Book();
+        book.name = bookName;
+
         if (author && genre) {
             book.author = author;
             book.genre = genre;

@@ -8,6 +8,10 @@ export class AuthorService {
 
     constructor(@Inject(PageUtils) private utils: PageUtils) {  }
 
+    async getAll() {
+        return await getRepository(Author).find();
+    }
+
     async getPage(page: number) {
         const options  = this.utils.getSearchOptions(page);
         const [authors, total] = await getRepository(Author).findAndCount(options);
