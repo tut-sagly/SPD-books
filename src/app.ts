@@ -8,6 +8,7 @@ import bodyParser from "body-parser";
 import path from "path";
 import {IndexController} from "./controllers/IndexController";
 import {BookController} from "./controllers/BookController";
+import {GenreController} from "./controllers/GenreController";
 
 const app = express();
 
@@ -41,7 +42,7 @@ app.use(
     express.static(path.join('dist'), { maxAge: 31557600000 })
 );
 
-attachControllers(app, [IndexController, AuthorController, BookController]);
+attachControllers(app, [IndexController, AuthorController, BookController, GenreController]);
 
 
 export default app;

@@ -15,15 +15,17 @@
 <% if (messages.error) { %>
     <div class="alert alert-danger" role="alert"><%- messages.error %></div>
 <% } %>
+Пошук книги на сторонці списку за допомогою фільтрів: Автори(multi select), Жанр книги, а також за допомогою часткового
+співпадіння по назві(text/free entry) книги.
 
 <div class="card">
     <div class="card-header">
         <ul class="nav nav-pills w-100">
             <li class="nav-pill active">
-                <a class="nav-link">Authors</a>
+                <a class="nav-link">Genres</a>
             </li>
             <li class="nav-pill ml-auto">
-                <a class="nav-link active" href="/authors/add">Add Author</a>
+                <a class="nav-link active" href="/genres/add">Add Genre</a>
             </li>
         </ul>
     </div>
@@ -34,9 +36,8 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Books</th>
+                    <th scope="col">Name</th>
+
                     <th width="200px">Action</th>
                 </tr>
                 </thead>
@@ -44,13 +45,11 @@
                 <% for(var i = 0; i < data.length; i++) { %>
                     <tr>
                         <th scope="row"><%= (i + 1) %></th>
-                        <td><%= data[i].firstName %></td>
-                        <td><%= data[i].lastName %></td>
-                        <td> HERE BOOKS</td>
+                        <td><%= data[i].name %></td>
                         <td>
-                            <a class="btn btn-success edit" href="  /authors/edit/<%= data[i].id %>">Edit</a>
+                            <a class="btn btn-success edit" href="/genres/edit/<%= data[i].id %>">Edit</a>
                             <a class="btn btn-danger delete" onclick="return alert('Are You sure?')"
-                               href="/authors/delete/<%= data[i].id %>">Delete</a>
+                               href="/genres/delete/<%= data[i].id %>">Delete</a>
                         </td>
                     </tr>
                 <% } %>
@@ -60,7 +59,7 @@
 
         <!-- if result is empty -->
         <% if(!data.length) { %>
-            <p class="text-center">No Authors yet!</p>
+            <p class="text-center">No Genres yet!</p>
         <% } %>
 
     </div>
