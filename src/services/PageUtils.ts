@@ -15,8 +15,10 @@ export class PageUtils {
     }
 
     mapResult(data: object, total: number, page: number) {
-        let p = Math.round((total / PAGE_SIZE));
+        let p = Math.floor((total / PAGE_SIZE));
         p = p < 1 ? 1 : p;
+        if (total > PAGE_SIZE && total % PAGE_SIZE)
+            p++;
 
         page++;
         return {
