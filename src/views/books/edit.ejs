@@ -20,15 +20,31 @@
         <form action="/books/update/<%= id %>" method="post">
             <div class="form-group">
                 <label>Name:</label>
-                <input type="text" class="form-control" name="name" value="<%= name %>" autocomplete="off">
+                <input type="text" class="form-control" name="name" value="<%= book.name %>" autocomplete="off">
             </div>
             <div class="form-group">
-                <label>Author:</label>
-                <input type="text" class="form-control" name="author" value="<%= author %>" autocomplete="off">
+                <label for="author">Author:</label>
+                <select id="author" name="authorId" class="selectpicker form-control" data-live-search="true">
+                    <% for(var i = 0; i < authors.length; i++) { %>
+                        <% if (book.author.id == authors[i].id) { %>
+                            <option selected="selected" value="<%= authors[i].id %>"><%= authors[i].firstName + " " + authors[i].lastName %></option>
+                        <% } else{ %>
+                                <option value="<%= authors[i].id %>"><%= authors[i].firstName + " " + authors[i].lastName %></option>
+                        <% } %>
+                    <% } %>
+                </select>
             </div>
             <div class="form-group">
-                <label>Genre:</label>
-                <input type="text" class="form-control" name="genre" value="<%= genres %>" autocomplete="off">
+                <label for="genre">Genre:</label>
+                <select id="genre" name="genreId" class="selectpicker form-control" data-live-search="true">
+                    <% for(var i = 0; i < genres.length; i++) { %>
+                        <% if (book.genre.id == genres[i].id) { %>
+                            <option selected="selected" value="<%= genres[i].id %>"><%= genres[i].name %></option>
+                        <% } else{ %>
+                            <option value="<%= genres[i].id %>"><%= genres[i].name %></option>
+                        <% } %>
+                    <% } %>
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-info" value="Update"/>

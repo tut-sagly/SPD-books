@@ -1,9 +1,10 @@
-import {Book} from "../entity/Book";
+import {AUTHOR_RELATION, Book, GENRE_RELATION} from "../entity/Book";
 import {getConnection, getRepository} from "typeorm";
 import {Inject, Injectable} from "@decorators/di";
 import {Author} from "../entity/Author";
 import {Genre} from "../entity/Genre";
 import {PAGE_SIZE, PageUtils} from "./PageUtils";
+import {UpdateBookRequest} from "../controllers/requests/UpdateBook";
 
 @Injectable()
 export class BookService {
@@ -14,15 +15,35 @@ export class BookService {
     async getPage(page: number) {
         const options = this.utils.getSearchOptions(page);
 
-        const [books, total] = await getRepository(Book).findAndCount(options);
+        const [books, total] = await getRepository(Book).findAndCount(
+            {
+                relations: [AUTHOR_RELATION, GENRE_RELATION],
+                order: { name: "ASC" },
+                ...options
+            }
+        );
+
         return this.utils.mapResult(books, total, options.UIpage);
     }
 
     async get(id: number): Promise<Book | undefined> {
-        return await getRepository(Book).findOne(id);
+        return await getRepository(Book).findOne(id, { relations: [AUTHOR_RELATION, GENRE_RELATION] });
     }
 
-    async update(book: Book) {
+    async update(bookRequest: UpdateBookRequest) {
+        const author = await getRepository(Author).findOne(bookRequest.authorId);
+        const genre = await getRepository(Genre).findOne(bookRequest.genreId);
+
+        let book = new Book();
+        if (author && genre) {
+            book.id = bookRequest.id;
+            book.name = bookRequest.name;
+            book.author = author;
+            book.genre = genre;
+
+        } else throw "Invalid author or genre.";
+
+        console.log(book);
         return await getRepository(Book).update(book.id, book);
     }
 

@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Author} from "./Author";
 import {Genre} from "./Genre";
 
@@ -17,3 +17,6 @@ export class Book {
     @ManyToOne(() => Genre, genre => genre.books)
     genre!: Genre;
 }
+
+export const AUTHOR_RELATION = "author";
+export const GENRE_RELATION = "genre";
