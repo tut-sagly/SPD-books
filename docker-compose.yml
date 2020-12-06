@@ -14,7 +14,7 @@ services:
     volumes:
       - ./db/backup.sql:/docker-entrypoint-initdb.d/dump.sql
 
-  server:
+  web:
     build: .
     links:
       - db
