@@ -50,7 +50,6 @@ export class BookController {
     async edit(@Response() res: Res, @Params('id') id: string) {
         let book = await this.bookService.get(Number(id));
 
-        console.log(book);
         const authors = await this.authorService.getAll();
         const genres = await this.genreService.getAll();
 

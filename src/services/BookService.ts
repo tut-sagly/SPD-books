@@ -43,7 +43,6 @@ export class BookService {
 
         } else throw "Invalid author or genre.";
 
-        console.log(book);
         return await getRepository(Book).update(book.id, book);
     }
 

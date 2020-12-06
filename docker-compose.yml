@@ -18,6 +18,8 @@ services:
     build: .
     links:
       - db
+    env_file: .env
+
     ports:
       - 3000:3000
       - 56745:56745

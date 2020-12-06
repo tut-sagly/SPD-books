@@ -20,11 +20,11 @@ app.set("port", process.env.PORT || 3000);
 
 createConnection({  // TODO: smells to extract it
     type: "mysql",
-    host: "db",
+    host: process.env.DATABASE_URL || "db",
     port: 3306,
-    username: "root",
-    password: "root",
-    database: "db",
+    username: process.env.DATABASE_USER_NAME || "root",
+    password: process.env.DATABASE_PASSWORD || "root",
+    database: process.env.DATABASE_SCHEMA || "public",
     entities: [
          __dirname + "/entity/*.ts"
     ],
