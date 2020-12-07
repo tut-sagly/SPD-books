@@ -26,7 +26,9 @@ export class GenreController {
 
     @Get('/add')
     add(@Response() res: Res) {
-        res.render('genres/add')
+        res.render('genres/add', {
+            messages: {}
+        })
     }
 
     @Post('/add')
