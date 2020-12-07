@@ -1,0 +1,30 @@
+version: "3"
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'books'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./db/backup.sql:/docker-entrypoint-initdb.d/dump.sql
+
+  web:
+    build: .
+    links:
+      - db
+    env_file: .env-dev
+
+    ports:
+      - 3000:3000
+      - 56745:56745
+    volumes:
+      - ./:/home/app
+      - /home/app/node_modules
+    depends_on:
+      - db
