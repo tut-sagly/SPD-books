@@ -14,11 +14,6 @@ const app = express();
 
 app.set("port", process.env.PORT || 3000);
 
-/**
- * Primary app routes.
- */
-
-
 if (process.env.NODE_ENV || 'development') {
     createConnection({  // TODO: smells to extract it
         type: "mysql",

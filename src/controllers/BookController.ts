@@ -18,15 +18,29 @@ export class BookController {
     @Get('/')
     async index(@Response() res: Res, @Query('page') page: number) {
         let books = await this.bookService.getPage(page);
+        let authors = await this.authorService.getAll();
+        let genres = await this.genreService.getAll();
 
         res.render("books/index", {
             messages: {},
             url: "/books",
+            authors: authors,
+            genres: genres,
             current: books.page,
             pages: books.pages,
             data: books.data
         });
     }
+
+    @Get('/search')
+    async search(@Request() req: Req, @Response() res: Res, @Query('authors') searchAuthors: number[],
+                 @Query('authors') searchGenres: number[],
+                 @Query('name') name: string) {
+
+        const books = await this.bookService.search(searchAuthors, searchGenres, name);
+        res.send({books});
+    }
+
 
     @Get('/add')
     async add(@Response() res: Res) {
