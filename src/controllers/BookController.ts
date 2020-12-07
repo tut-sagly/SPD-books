@@ -84,15 +84,7 @@ export class BookController {
         bookRequest.id = id;
         await this.bookService.update(bookRequest);
 
-        // let books = await this.bookService.getPage(1);
         res.redirect('/books')
-        /*      res.render("books/index", {
-                  messages: {success: 'Genre was updated'},
-                  url: "/books",
-                  current: books.page,
-                  pages: books.pages,
-                  data: books.data
-              });*/
     }
 
     @Get('/delete/:id')
@@ -100,5 +92,4 @@ export class BookController {
         await this.bookService.delete(id);
         res.redirect('/books')
     }
-
 }
