@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
-    express.static(path.join('dist'), { maxAge: 31557600000 })
+    express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
 
 attachControllers(app, [IndexController, AuthorController, BookController, GenreController]);
