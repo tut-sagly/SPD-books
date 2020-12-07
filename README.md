@@ -20,3 +20,5 @@ Not implemented but must have in the real app
 2. Handle 404 page and 500+ HTTP status codes 
 3. Form validations
 4. Tests ^_^
+5. Properly pagination during the search on the Books page (pagination hides to do not confuse user now)
+

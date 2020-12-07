@@ -17,13 +17,19 @@ $(document).ready(function () {
         res.push($tr);
       }
       $('<tbody>').append(res)
-      $("#books tbody ").html(  res);
+      $("#books tbody ").html(res);
+      if ($("#authors").val().length != 0 ||  $("#genres").val().length != 0 ||  $("#book-name").val().length != 0) {
+        $('.pagination').hide();
+      }
+
     });
   });
   $("#reset").click(function () {
     $('.selectpicker').selectpicker('deselectAll');
     $('#book-name').val('');
     $("#search").click();
+
+    $(".pagination").show();
   });
 });
 
