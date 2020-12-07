@@ -37,6 +37,9 @@ export class BookService {
             .addGenre(searchGenres)
             .addName(name)
             .build();
+        console.log(sql);
+        console.log(searchAuthors);
+        console.log(searchGenres);
 
         return await getManager().query(sql);
     }

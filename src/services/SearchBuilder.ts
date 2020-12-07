@@ -14,8 +14,9 @@ export class SearchBuilder {
 
     addGenre(genres: number[]): SearchBuilder {
         this.genres = "";
+        const and = this.authors != "" ? " and " : " ";
         if (genres.length > 0) {
-            this.genres = `and genre.id in (${genres})`
+            this.genres = `${and} genre.id in (${genres})`
         }
         return this;
     }

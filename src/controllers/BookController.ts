@@ -34,7 +34,7 @@ export class BookController {
 
     @Get('/search')
     async search(@Request() req: Req, @Response() res: Res, @Query('authors') searchAuthors: number[],
-                 @Query('authors') searchGenres: number[],
+                 @Query('genres') searchGenres: number[],
                  @Query('name') name: string) {
 
         const books = await this.bookService.search(searchAuthors, searchGenres, name);
