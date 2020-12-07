@@ -17,7 +17,6 @@ export function connectToDB() {
             logging: ["error"]
         }).catch(error => console.log(error));
     } else {
-
         createConnection({
             type: "mysql",
             url: process.env.DATABASE_URL,
