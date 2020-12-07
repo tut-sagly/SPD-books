@@ -1,6 +1,6 @@
 export class UpdateBookRequest {
-    id: number;
-    name: string;
-    authorId: number;
-    genreId: number;
+    id!: number;
+    name!: string;
+    authorId!: number;
+    genreId!: number;
 }

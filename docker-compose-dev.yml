@@ -14,8 +14,10 @@ services:
     volumes:
       - ./db/backup.sql:/docker-entrypoint-initdb.d/dump.sql
 
-  web:
-    build: .
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
     links:
       - db
     env_file: .env-dev

@@ -7,4 +7,4 @@ RUN npm install
 
 COPY . /home/app/
 
-CMD [ "npm", "run", "start:prod" ]
+CMD [ "npm", "run", "start:dev" ]
